@@ -1,5 +1,4 @@
-from tkinter import *
-from tkinter import filedialog
+from tkinter import filedialog, Tk, Button, Label
 
 import numpy
 
@@ -7,11 +6,11 @@ from knn_alg import *
 
 
 class Interface:
-    def __int__(self):
+    def __init__(self):
         self.window = Tk()
         self.chose_file = Button(self.window, text="Выберете файл")
         self.chose_file.grid(column=1, row=0)
-        self.chose_file.bind(self.press_file_button)
+        self.chose_file.bind('<Button-1>', self.press_file_button)
         self.file_path = ''
         self.first_text = Label(self.window, text="")
         self.first_text.grid(column=0, row=0)
@@ -19,6 +18,11 @@ class Interface:
         self.start_button.grid(column=1, row=1)
         self.status = Label(self.window, text="Не запущено")
         self.status.grid(column=0, row=1)
+        self.start_button.bind('<Button-1>', self.press_start)
+        self.result = []
+        self.show_g = Button(self.window, text="Показать график")
+        self.show_g.grid(column=3, row=0)
+        self.show_g.bind('<Button-1>', self.make_graph)
 
     def press_file_button(self, event):
         self.file_path = filedialog.askopenfilename()
@@ -33,8 +37,19 @@ class Interface:
         data = numpy.loadtxt(self.file_path, delimiter=',')
         sep = numpy.random.random(len(data))
         for i in range(len(data)):
-            if sep < 0.3:
+            if sep[i] < 0.3:
                 test_data.append(Dot(data[i][:-1], data[i][-1]))
             else:
                 unk_data.append(Dot(data[i][:-1]))
-        result = start_knn(test_data, unk_data, 3)
+        self.result = convert(start_knn(test_data, unk_data, 3))
+        self.status['text'] = 'Готово'
+
+    def make_graph(self, event):
+        plt.scatter(self.result[0], self.result[1], c=self.result[2])
+        plt.show()
+
+
+if __name__ == '__main__':
+    temp = Interface()
+    # temp.file_path = 'data.csv'
+    temp.window.mainloop()

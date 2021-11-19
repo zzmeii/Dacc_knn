@@ -53,10 +53,20 @@ def find_nearest(test_data: List[Dot], target: Dot, k: int) -> List[int]:
     return [i.k_class for i in nearest]
 
 
-def start_knn(test_data, unk_data, k):
+def convert(data: List[Dot]):
+    result = [[] for i in range(len(data[0].point) + 1)]
+    for i in data:
+        for j in range(len(i.point)):
+            result[j].append(i.point[j])
+        result[-1].append(i.k_class)
+    return result
+
+
+def start_knn(test_data: list, unk_data, k):
     for i in range(len(unk_data)):
         temp = find_nearest(test_data, unk_data[i], k)
         count = Counter(temp)
         ind = list(count.values()).index(max(count.values()))
         unk_data[i].k_class = list(count.keys())[ind]
-    return test_data.extend(unk_data)
+    test_data.extend(unk_data)
+    return test_data
