@@ -48,7 +48,7 @@ def find_nearest(test_data: List[Dot], target: Dot, k: int) -> List[int]:
 
 
 def convert(data: List[Dot]):
-    result = [[] for i in range(len(data[0].point) + 1)]
+    result = [[] for _ in range(len(data[0].point) + 1)]
     for i in data:
         for j in range(len(i.point)):
             result[j].append(i[j])
