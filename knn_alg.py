@@ -13,13 +13,13 @@ class Dot:
 
     def __init__(self, cords: list, k_class: int = None):
 
-        self.k_class = k_class
         self.point = np.array(cords.copy())
+        self.k_class = k_class
 
     def __eq__(self, other: "Dot") -> bool:
 
         for i in range(len(self.point)):
-            if self.point[i] == other.point[i]:
+            if self[i] == other[i]:
                 pass
             else:
                 return False
@@ -28,7 +28,6 @@ class Dot:
     def __add__(self, other) -> float:
 
         result = 0
-
         for i in range(len(self.point)):
             result = result + pow(other.point[i] - self.point[i], 2)
         return np.sqrt(result)
@@ -57,7 +56,7 @@ def convert(data: List[Dot]):
     result = [[] for i in range(len(data[0].point) + 1)]
     for i in data:
         for j in range(len(i.point)):
-            result[j].append(i.point[j])
+            result[j].append(i[j])
         result[-1].append(i.k_class)
     return result
 
