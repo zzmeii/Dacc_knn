@@ -9,7 +9,7 @@ from knn_alg import *
 class Interface:
     def __init__(self):
         self.window = Tk()
-        self.title = "Даций KNN"
+        self.window.title("Даций KNN")
         self.chose_file = Button(self.window, text="Выберете файл")
         self.chose_file.grid(column=1, row=0)
         self.chose_file.bind('<Button-1>', self.press_file_button)
