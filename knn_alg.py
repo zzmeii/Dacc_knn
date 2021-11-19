@@ -1,12 +1,7 @@
-import random
-
-# from test import data
 from collections import Counter
 from typing import List
 
-import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pd
 
 
 class Dot:
@@ -32,7 +27,7 @@ class Dot:
             result = result + pow(other.point[i] - self.point[i], 2)
         return np.sqrt(result)
 
-    def __getitem__(self, item: int) -> int:
+    def __getitem__(self, item: int):
         return self.point[item]
 
 
